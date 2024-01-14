@@ -1,0 +1,68 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="EFCore.NamingConventions" Version="8.0.2" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="8.0.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Haskap.DddBase.Application.Contracts">
+      <HintPath>..\References\Haskap.DddBase.Application.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Haskap.DddBase.Application.UseCaseServices">
+      <HintPath>..\References\Haskap.DddBase.Application.UseCaseServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Haskap.DddBase.Domain">
+      <HintPath>..\References\Haskap.DddBase.Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="Haskap.DddBase.Domain.Shared">
+      <HintPath>..\References\Haskap.DddBase.Domain.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Haskap.DddBase.Infra">
+      <HintPath>..\References\Haskap.DddBase.Infra.dll</HintPath>
+    </Reference>
+    <Reference Include="Haskap.DddBase.Infra.Db.Contexts.EfCoreContext">
+      <HintPath>..\References\Haskap.DddBase.Infra.Db.Contexts.EfCoreContext.dll</HintPath>
+    </Reference>
+    <Reference Include="Haskap.DddBase.Infra.Db.Contexts.NpgsqlDbContext">
+      <HintPath>..\References\Haskap.DddBase.Infra.Db.Contexts.NpgsqlDbContext.dll</HintPath>
+    </Reference>
+    <Reference Include="Haskap.DddBase.Infra.Db.Interceptors">
+      <HintPath>..\References\Haskap.DddBase.Infra.Db.Interceptors.dll</HintPath>
+    </Reference>
+    <Reference Include="Haskap.DddBase.Presentation">
+      <HintPath>..\References\Haskap.DddBase.Presentation.dll</HintPath>
+    </Reference>
+    <Reference Include="Haskap.DddBase.Utilities">
+      <HintPath>..\References\Haskap.DddBase.Utilities.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Haskap.Workflow.Application.Contracts\Haskap.Workflow.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Haskap.Workflow.Application.Dtos\Haskap.Workflow.Application.Dtos.csproj" />
+    <ProjectReference Include="..\Haskap.Workflow.Application.UseCaseServices\Haskap.Workflow.Application.UseCaseServices.csproj" />
+    <ProjectReference Include="..\Haskap.Workflow.Domain.Shared\Haskap.Workflow.Domain.Shared.csproj" />
+    <ProjectReference Include="..\Haskap.Workflow.Domain\Haskap.Workflow.Domain.csproj" />
+    <ProjectReference Include="..\Haskap.Workflow.Infra\Haskap.Workflow.Infra.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewComponents\Shared\" />
+    <Folder Include="Views\Shared\Components\" />
+  </ItemGroup>
+
+</Project>
