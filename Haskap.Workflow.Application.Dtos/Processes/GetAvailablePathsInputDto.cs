@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Haskap.Workflow.Application.Dtos.Processes;
-public class GetAvailableCommandsOutputDto
+public class GetAvailablePathsInputDto
 {
-    public IList<CommandOutputDto> AvailableCommands { get; set; }
+    public Guid RequestId { get; set; }
 }

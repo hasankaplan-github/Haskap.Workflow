@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Haskap.Workflow.Application.Dtos.Processes;
-public class MakeProgressInputDto
+public class GetAvailablePathsOutputDto
 {
-    public Guid RequestId { get; set; }
-    public Guid CommandId { get; set; }
+    public IList<PathOutputDto> AvailablePaths { get; set; }
 }

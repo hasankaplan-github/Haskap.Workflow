@@ -49,8 +49,8 @@ public class Process1Controller : Controller
     {
         var output = await _process1Service.GetRequestDetailAsync(requestId, cancellationToken);
         
-        var availableCommands = await _processService.GetAvailableCommandsAsync(new Application.Dtos.Processes.GetAvailableCommandsInputDto { RequestId = requestId }, cancellationToken);
-        ViewBag.AvailableCommands = availableCommands.AvailableCommands;
+        var availablePaths = await _processService.GetAvailablePathsAsync(new Application.Dtos.Processes.GetAvailablePathsInputDto { RequestId = requestId }, cancellationToken);
+        ViewBag.AvailablePaths = availablePaths.AvailablePaths;
 
         return View(output);
     }
@@ -59,5 +59,11 @@ public class Process1Controller : Controller
     public async Task DeleteRequest(DeleteRequestInputDto inputDto, CancellationToken cancellationToken = default)
     {
         await _process1Service.DeleteRequestAsync(inputDto, cancellationToken);
+    }
+
+    [HttpPost]
+    public async Task MakeProgress(MakeProgressInputDto inputDto, CancellationToken cancellationToken = default)
+    {
+        await _process1Service.MakeProgressAsync(inputDto, cancellationToken);
     }
 }

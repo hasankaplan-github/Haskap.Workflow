@@ -12,5 +12,6 @@ public interface IProcess1Service
     Task DeleteRequestAsync(DeleteRequestInputDto inputDto, CancellationToken cancellationToken);
     Task<RequestDetailOutputDto> GetRequestDetailAsync(Guid requestId, CancellationToken cancellationToken);
     Task<Guid> InitRequestAsync(InitRequestInputDto inputDto, CancellationToken cancellationToken);
+    Task<Guid> MakeProgressAsync(MakeProgressInputDto inputDto, CancellationToken cancellationToken);
     Task<JqueryDataTableResult> SearchRequestAsync(SearchParamsInputDto inputDto, JqueryDataTableParam jqueryDataTableParam, CancellationToken cancellationToken);
 }

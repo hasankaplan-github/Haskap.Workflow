@@ -33,47 +33,27 @@ public class ProcessService : IProcessService
 
 
 
-    public async Task<GetAvailableCommandsOutputDto> GetAvailableCommandsAsync(GetAvailableCommandsInputDto inputDto, CancellationToken cancellationToken)
+    public async Task<GetAvailablePathsOutputDto> GetAvailablePathsAsync(GetAvailablePathsInputDto inputDto, CancellationToken cancellationToken)
     {
         var currentState = await _workflowDbContext.Request
             .Include(x => x.CurrentState)
             .Where(x => x.Id == inputDto.RequestId)
-        .Select(x => x.CurrentState)
+            .Select(x => x.CurrentState)
             .FirstAsync(cancellationToken);
 
-        var availableCommands = await _workflowDbContext.Path
+        var availablePaths = await _workflowDbContext.Path
             .Include(x => x.Command)
+            .Include(x => x.Roles)
             .Where(x => x.FromStateId == currentState.Id)
-            .Select(x => x.Command)
             .ToListAsync(cancellationToken);
 
-        var outputDto = new GetAvailableCommandsOutputDto
+        var outputDto = new GetAvailablePathsOutputDto
         {
-            AvailableCommands = _mapper.Map<List<CommandOutputDto>>(availableCommands)
+            AvailablePaths = _mapper.Map<List<PathOutputDto>>(availablePaths)
         };
 
         return outputDto;
     }
 
-    public async Task<Guid> MakeProgressAsync(MakeProgressInputDto inputDto, CancellationToken cancellationToken)
-    {
-        var request = await _workflowDbContext.Request
-            .Where(x => x.Id == inputDto.RequestId)
-            .FirstAsync(cancellationToken);
-
-        var path = await _workflowDbContext.Path
-        .Include(x => x.ToState)
-            .Where(x => x.FromStateId == request.CurrentStateId && x.CommandId == inputDto.CommandId)
-            .FirstAsync(cancellationToken);
-
-        var progressId = request.MakeProgress(path.ToState, path.Id, _currentUserIdProvider.CurrentUserId.Value);
-
-        // save data with progressId,
-        // data comes with inputDto,
-        // then SaveChanges (in single transaction)
-
-        await _workflowDbContext.SaveChangesAsync(cancellationToken);
-
-        return progressId;
-    }
+    
 }
