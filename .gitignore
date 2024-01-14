@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Haskap.Workflow.Ui.MvcWebUi/appsettings.json
+/Haskap.Workflow.Ui.MvcWebUi/appsettings.Development.json
+/Haskap.Workflow.Ui.MvcWebUi/appsettings.Production.json
