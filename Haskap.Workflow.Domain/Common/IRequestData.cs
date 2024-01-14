@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Haskap.Workflow.Domain.Common;
-public interface IIsDraft
+public interface IRequestData
 {
-    bool IsDraft { get; }
+    Guid RequestId { get; set; }
 }

@@ -16,6 +16,8 @@ using Haskap.Workflow.Application.Contracts.Roles;
 using Haskap.Workflow.Application.Contracts.ViewLevelExceptions;
 using Haskap.Workflow.Application.Contracts.Processes;
 using Haskap.Workflow.Application.UseCaseServices.Processes;
+using Haskap.Workflow.Application.UseCaseServices.Processes.Process1;
+using Haskap.Workflow.Application.Contracts.Processes.Process1;
 
 namespace Haskap.Workflow.Ui.MvcWebUi;
 
@@ -32,6 +34,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IViewLevelExceptionService, ViewLevelExceptionService>();
         services.AddTransient<IRoleService, RoleService>();
         services.AddTransient<IProcessService, ProcessService>();
+        services.AddTransient<IProcess1Service, Process1Service>();
     }
 
     public static void AddProviders(this IServiceCollection services)

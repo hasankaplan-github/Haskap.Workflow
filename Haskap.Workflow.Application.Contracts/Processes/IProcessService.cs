@@ -11,5 +11,4 @@ public interface IProcessService : IUseCaseService
 {
     Task<GetAvailableCommandsOutputDto> GetAvailableCommandsAsync(GetAvailableCommandsInputDto inputDto, CancellationToken cancellationToken);
     Task<Guid> MakeProgressAsync(MakeProgressInputDto inputDto, CancellationToken cancellationToken);
-    Task<Guid> InitRequestAsync(InitRequestInputDto inputDto, CancellationToken cancellationToken);
 }

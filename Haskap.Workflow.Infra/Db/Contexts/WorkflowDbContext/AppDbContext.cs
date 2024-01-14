@@ -9,6 +9,7 @@ using Haskap.Workflow.Domain.Common;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.Linq.Expressions;
 using Haskap.Workflow.Domain.ProcessAggregate;
+using Haskap.Workflow.Domain.Process1Aggregate;
 
 namespace Haskap.Workflow.Infra.Db.Contexts.WorkflowDbContext;
 public class AppDbContext : BaseEfCoreNpgsqlDbContext, IWorkflowDbContext
@@ -40,4 +41,6 @@ public class AppDbContext : BaseEfCoreNpgsqlDbContext, IWorkflowDbContext
     public DbSet<Domain.ProcessAggregate.Path> Path { get; set; }
     public DbSet<Progress> Progress { get; set; }
     public DbSet<Request> Request { get; set; }
+        
+    public DbSet<Process1RequestData> Process1RequestData { get; set; }
 }

@@ -1,4 +1,5 @@
 ﻿using Haskap.DddBase.Domain;
+using Haskap.Workflow.Domain.Process1Aggregate;
 using Haskap.Workflow.Domain.ProcessAggregate;
 using Haskap.Workflow.Domain.RoleAggregate;
 using Haskap.Workflow.Domain.UserAggregate;
@@ -23,4 +24,5 @@ public interface IWorkflowDbContext : IUnitOfWork
     DbSet<Domain.ProcessAggregate.Path> Path { get; set; }
     DbSet<Progress> Progress { get; set; }
     DbSet<Request> Request { get; set; }
+    DbSet<Process1RequestData> Process1RequestData { get; set; }
 }

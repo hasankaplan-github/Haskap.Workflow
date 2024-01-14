@@ -1,0 +1,60 @@
+﻿@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var antiforgeryToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+}
+
+
+<div class="row">
+    <div class="col-md-4">
+        <label for="firstNameInput" class="form-label">İsim</label>
+        <input id="firstNameInput" type="text" class="form-control" aria-describedby="İsim" />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <label for="lastNameInput" class="form-label">Soyisim</label>
+        <input id="lastNameInput" type="text" class="form-control" aria-describedby="Soyisim" />
+    </div>
+</div>
+
+<br />
+
+<div class="row">
+    <div class="col-md-4">
+        <button class="btn btn-primary float-end" id="saveButton">Kaydet</button>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script>
+
+        $("#saveButton").click(function () {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("CreateRequest", "Process1")',
+                headers: {
+                    'RequestVerificationToken': '@antiforgeryToken'
+                },
+                data: {
+                    processId: "@ViewBag.Process1Id",
+                    firstName: $("#firstNameInput").val(),
+                    lastName: $("#lastNameInput").val()
+                }
+            }).done(function (result, status, xhr) {
+                Swal.fire('Başarılı', 'Talep başarıyla oluşturuldu. Talep Id=' + result, 'success');
+
+                $("#firstNameInput").val('');
+                $("#lastNameInput").val('');
+            });
+        })
+
+    </script>
+
+}

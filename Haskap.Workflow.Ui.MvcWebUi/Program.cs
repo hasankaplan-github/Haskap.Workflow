@@ -46,7 +46,6 @@ var builder = WebApplication.CreateBuilder(options);
 //builder.WebHost.UseUrls("http://localhost:5050");
 
 // Add services to the container.
-builder.Services.Configure<StepPicturesSettings>(builder.Configuration.GetSection(StepPicturesSettings.SectionName));
 
 builder.Services.AddExceptionHandler<DefaultExceptionHandler>();
 
@@ -142,7 +141,7 @@ app.UseRequestLocalization(x =>
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Recipe}/{action=Index}/{id?}");
+    pattern: "{controller=Process1}/{action=CreateRequest}/{id?}");
 
 //app.MapControllerRoute(
 //    name: "public_recipe_detail",

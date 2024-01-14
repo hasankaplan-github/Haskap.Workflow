@@ -55,25 +55,6 @@ public class ProcessService : IProcessService
         return outputDto;
     }
 
-    public async Task<Guid> InitRequestAsync(InitRequestInputDto inputDto, CancellationToken cancellationToken)
-    {
-        var process = await _workflowDbContext.Process
-            .Include(x => x.States.Where(y => y.StateType == StateType.StartState))
-            .Where(x => x.Id == inputDto.ProcessId)
-            .FirstAsync(cancellationToken);
-
-        var requestId = process.InitRequest(_currentUserIdProvider.CurrentUserId.Value);
-
-        // save data with requestId,
-        // data comes with inputDto,
-        // then SaveChanges (in single transaction)
-
-
-        await _workflowDbContext.SaveChangesAsync(cancellationToken);
-
-        return requestId;
-    }
-
     public async Task<Guid> MakeProgressAsync(MakeProgressInputDto inputDto, CancellationToken cancellationToken)
     {
         var request = await _workflowDbContext.Request
