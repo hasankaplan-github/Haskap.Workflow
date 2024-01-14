@@ -1,26 +1,27 @@
-﻿using Haskap.Workflow.Application.Contracts.Processes.Process1;
+﻿using Haskap.Workflow.Application.Contracts.Processes;
+using Haskap.Workflow.Application.Contracts.Processes.Process1;
+using Haskap.Workflow.Application.Dtos.Common.DataTable;
 using Haskap.Workflow.Application.Dtos.Processes.Process1;
 using Haskap.Workflow.Domain.Process1Aggregate;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Haskap.Workflow.Ui.MvcWebUi.Controllers;
 public class Process1Controller : Controller
 {
+    private readonly Guid _process1Id = Guid.Parse("");
     private readonly IProcess1Service _process1Service;
+    private readonly IProcessService _processService;
 
-    public Process1Controller(IProcess1Service process1Service)
+    public Process1Controller(IProcess1Service process1Service, IProcessService processService)
     {
         _process1Service = process1Service;
-    }
-
-    public IActionResult Index()
-    {
-        return View();
+        _processService = processService;
     }
 
     public async Task<IActionResult> CreateRequest(CancellationToken cancellationToken = default)
     {
-        ViewBag.Process1Id = Guid.NewGuid().ToString();
+        ViewBag.Process1Id = _process1Id;
         return View();
     }
 
@@ -28,5 +29,35 @@ public class Process1Controller : Controller
     public async Task CreateRequest(InitRequestInputDto inputDto, CancellationToken cancellationToken = default)
     {
         await _process1Service.InitRequestAsync(inputDto, cancellationToken);
+    }
+
+    public async Task<IActionResult> SearchRequest(CancellationToken cancellationToken = default)
+    {
+        ViewBag.Process1Id = _process1Id;
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<JsonResult> SearchRequest(SearchParamsInputDto inputDto, JqueryDataTableParam jqueryDataTableParam, CancellationToken cancellationToken = default)
+    {
+        var result = await _process1Service.SearchRequestAsync(inputDto, jqueryDataTableParam, cancellationToken);
+        return Json(result);
+    }
+
+    [HttpGet("Process1/RequestDetail/{requestId}")]
+    public async Task<IActionResult> RequestDetail(Guid requestId, CancellationToken cancellationToken)
+    {
+        var output = await _process1Service.GetRequestDetailAsync(requestId, cancellationToken);
+        
+        var availableCommands = await _processService.GetAvailableCommandsAsync(new Application.Dtos.Processes.GetAvailableCommandsInputDto { RequestId = requestId }, cancellationToken);
+        ViewBag.AvailableCommands = availableCommands.AvailableCommands;
+
+        return View(output);
+    }
+
+    [HttpDelete]
+    public async Task DeleteRequest(DeleteRequestInputDto inputDto, CancellationToken cancellationToken = default)
+    {
+        await _process1Service.DeleteRequestAsync(inputDto, cancellationToken);
     }
 }

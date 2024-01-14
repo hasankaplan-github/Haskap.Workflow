@@ -1,0 +1,1 @@
+let searchResultTable = null;

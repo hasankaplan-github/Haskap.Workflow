@@ -1,0 +1,52 @@
+﻿@using Haskap.Workflow.Application.Dtos.Processes.Process1;
+
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model RequestDetailOutputDto
+
+@{
+    var antiforgeryToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+}
+
+
+
+
+
+@section Scripts{
+
+    <script>
+
+        function deleteRequest(requestId) {
+            Swal.fire({
+                icon: 'question',
+                title: 'Talebi silmek istediğinizden emin misiniz?',
+                //showDenyButton: true,
+                showCancelButton: true,
+                cancelButtonText: 'İptal',
+                confirmButtonText: 'Sil',
+                //denyButtonText: `Don't save`,
+            }).then((confirmation) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (confirmation.isConfirmed) {
+                    $.ajax({
+                        type: "DELETE",
+                        headers: {
+                            'RequestVerificationToken': '@antiforgeryToken'
+                        },
+                        url: "@Url.Action("DeleteRequest", "Process1")",
+                        data: {
+                            requestId: requestId
+                        }
+                    }).done(function (result, status, xhr) {
+                        Swal.fire('Başarıyla silindi.', '', 'success');
+                    });
+                }
+            });
+        }
+
+    </script>
+}
