@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Haskap.Workflow.Application.Dtos.Processes.Process1;
-public class MakeProgressInputDto
+public class RequestDataInputDto
 {
-    public Guid RequestId { get; set; }
-    public Guid CommandId { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
 }

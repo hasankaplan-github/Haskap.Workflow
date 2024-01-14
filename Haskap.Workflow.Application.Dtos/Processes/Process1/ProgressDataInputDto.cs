@@ -5,9 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Haskap.Workflow.Application.Dtos.Processes.Process1;
-public class InitRequestInputDto
+public class ProgressDataInputDto
 {
-    public Guid ProcessId { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
+    public string? Note { get; set; }
 }

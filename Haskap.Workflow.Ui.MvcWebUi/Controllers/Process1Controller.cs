@@ -1,6 +1,7 @@
 ﻿using Haskap.Workflow.Application.Contracts.Processes;
 using Haskap.Workflow.Application.Contracts.Processes.Process1;
 using Haskap.Workflow.Application.Dtos.Common.DataTable;
+using Haskap.Workflow.Application.Dtos.Processes;
 using Haskap.Workflow.Application.Dtos.Processes.Process1;
 using Haskap.Workflow.Domain.Process1Aggregate;
 using Microsoft.AspNetCore.Components.Forms;
@@ -26,9 +27,10 @@ public class Process1Controller : Controller
     }
 
     [HttpPost]
-    public async Task CreateRequest(InitRequestInputDto inputDto, CancellationToken cancellationToken = default)
+    public async Task CreateRequest(Guid processId, RequestDataInputDto requestDataInputDto, CancellationToken cancellationToken = default)
     {
-        await _process1Service.InitRequestAsync(inputDto, cancellationToken);
+        var requestData = new RequestData(requestDataInputDto.FirstName, requestDataInputDto.LastName);
+        await _processService.InitRequestAsync(processId, requestData, cancellationToken);
     }
 
     public async Task<IActionResult> SearchRequest(CancellationToken cancellationToken = default)
@@ -62,8 +64,9 @@ public class Process1Controller : Controller
     }
 
     [HttpPost]
-    public async Task MakeProgress(MakeProgressInputDto inputDto, CancellationToken cancellationToken = default)
+    public async Task MakeProgress(MakeProgressInputDto inputDto, ProgressDataInputDto progressDataInputDto, CancellationToken cancellationToken = default)
     {
-        await _process1Service.MakeProgressAsync(inputDto, cancellationToken);
+        var progressData = new ProgressData(progressDataInputDto.Note);
+        await _processService.MakeProgressAsync(inputDto, progressData, cancellationToken);
     }
 }

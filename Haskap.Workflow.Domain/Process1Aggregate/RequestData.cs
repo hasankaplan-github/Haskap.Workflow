@@ -17,9 +17,8 @@ public class RequestData : AggregateRoot, IRequestData
     {
     }
 
-    public RequestData(Guid requestId, string firstName, string lastName)
+    public RequestData(string firstName, string lastName)
     {
-        RequestId = requestId;
         FirstName = firstName;
         LastName = lastName;
     }

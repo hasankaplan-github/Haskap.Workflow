@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Haskap.Workflow.Domain;
 using Haskap.Workflow.Domain.Shared.Enums;
 using Haskap.Workflow.Application.Dtos.Common.DataTable;
+using Haskap.Workflow.Application.Dtos.Processes;
 
 namespace Haskap.Workflow.Application.UseCaseServices.Processes.Process1;
 public class Process1Service : IProcess1Service
@@ -64,47 +65,7 @@ public class Process1Service : IProcess1Service
         return output;
     }
 
-    public async Task<Guid> InitRequestAsync(InitRequestInputDto inputDto, CancellationToken cancellationToken)
-    {
-        var process = await _workflowDbContext.Process
-            .Include(x => x.States.Where(y => y.StateType == StateType.StartState))
-            .Where(x => x.Id == inputDto.ProcessId)
-            .FirstAsync(cancellationToken);
-
-        var requestId = process.InitRequest(_currentUserIdProvider.CurrentUserId.Value);
-
-        // save data with requestId,
-        // data comes with inputDto,
-        // then SaveChanges (in single transaction)
-        var process1RequestData = new RequestData(requestId, inputDto.FirstName, inputDto.LastName);
-        await _workflowDbContext.Process1RequestData.AddAsync(process1RequestData, cancellationToken);
-
-        await _workflowDbContext.SaveChangesAsync(cancellationToken);
-
-        return requestId;
-    }
-
-    public async Task<Guid> MakeProgressAsync(MakeProgressInputDto inputDto, CancellationToken cancellationToken)
-    {
-        var request = await _workflowDbContext.Request
-            .Where(x => x.Id == inputDto.RequestId)
-            .FirstAsync(cancellationToken);
-
-        var path = await _workflowDbContext.Path
-            .Include(x => x.ToState)
-            .Where(x => x.FromStateId == request.CurrentStateId && x.CommandId == inputDto.CommandId)
-            .FirstAsync(cancellationToken);
-
-        var progressId = request.MakeProgress(path.ToState, path.Id, _currentUserIdProvider.CurrentUserId.Value);
-
-        // save data with progressId,
-        // data comes with inputDto,
-        // then SaveChanges (in single transaction)
-
-        await _workflowDbContext.SaveChangesAsync(cancellationToken);
-
-        return progressId;
-    }
+    
 
     public async Task<JqueryDataTableResult> SearchRequestAsync(SearchParamsInputDto inputDto, JqueryDataTableParam jqueryDataTableParam, CancellationToken cancellationToken)
     {
