@@ -6,18 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Haskap.Workflow.Domain.Process1Aggregate;
-public class Process1RequestData : AggregateRoot, IRequestData
+public class RequestData : AggregateRoot, IRequestData
 {
     public Guid RequestId { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
 
 
-    private Process1RequestData()
+    private RequestData()
     {
     }
 
-    public Process1RequestData(Guid requestId, string firstName, string lastName)
+    public RequestData(Guid requestId, string firstName, string lastName)
     {
         RequestId = requestId;
         FirstName = firstName;

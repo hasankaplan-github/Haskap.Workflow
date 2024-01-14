@@ -1,6 +1,5 @@
 ﻿using Haskap.Workflow.Domain.Process1Aggregate;
 using Haskap.Workflow.Domain.ProcessAggregate;
-using Haskap.Workflow.Domain.RoleAggregate;
 using Haskap.Workflow.Domain.Shared.Consts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -12,10 +11,15 @@ using System.Threading.Tasks;
 
 namespace Haskap.Workflow.Infra.Db.Contexts.WorkflowDbContext.EntityTypeConfigurations;
 
-public class Process1RequestDataEntityTypeConfiguration : BaseEntityTypeConfiguration<Process1RequestData>
+public class Process1RequestDataEntityTypeConfiguration : BaseEntityTypeConfiguration<RequestData>
 {
-    public override void Configure(EntityTypeBuilder<Process1RequestData> builder)
+    public override void Configure(EntityTypeBuilder<RequestData> builder)
     {
         base.Configure(builder);
+
+        builder.HasOne<Request>()
+            .WithOne()
+            .HasForeignKey<RequestData>(x => x.RequestId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

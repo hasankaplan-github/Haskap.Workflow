@@ -24,5 +24,5 @@ public interface IWorkflowDbContext : IUnitOfWork
     DbSet<Domain.ProcessAggregate.Path> Path { get; set; }
     DbSet<Progress> Progress { get; set; }
     DbSet<Request> Request { get; set; }
-    DbSet<Process1RequestData> Process1RequestData { get; set; }
+    DbSet<RequestData> Process1RequestData { get; set; }
 }

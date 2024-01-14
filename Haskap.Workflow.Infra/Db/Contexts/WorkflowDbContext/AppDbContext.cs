@@ -42,5 +42,5 @@ public class AppDbContext : BaseEfCoreNpgsqlDbContext, IWorkflowDbContext
     public DbSet<Progress> Progress { get; set; }
     public DbSet<Request> Request { get; set; }
         
-    public DbSet<Process1RequestData> Process1RequestData { get; set; }
+    public DbSet<RequestData> Process1RequestData { get; set; }
 }

@@ -76,7 +76,7 @@ public class Process1Service : IProcess1Service
         // save data with requestId,
         // data comes with inputDto,
         // then SaveChanges (in single transaction)
-        var process1RequestData = new Process1RequestData(requestId, inputDto.FirstName, inputDto.LastName);
+        var process1RequestData = new RequestData(requestId, inputDto.FirstName, inputDto.LastName);
         await _workflowDbContext.Process1RequestData.AddAsync(process1RequestData, cancellationToken);
 
         await _workflowDbContext.SaveChangesAsync(cancellationToken);
