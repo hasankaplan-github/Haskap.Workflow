@@ -1,4 +1,5 @@
-﻿using Haskap.Workflow.Application.Contracts.Processes;
+﻿using Haskap.DddBase.Utilities.Guids;
+using Haskap.Workflow.Application.Contracts.Processes;
 using Haskap.Workflow.Application.Contracts.Processes.Process1;
 using Haskap.Workflow.Application.Dtos.Common.DataTable;
 using Haskap.Workflow.Application.Dtos.Processes;
@@ -29,7 +30,7 @@ public class Process1Controller : Controller
     [HttpPost]
     public async Task CreateRequest(Guid processId, RequestDataInputDto requestDataInputDto, CancellationToken cancellationToken = default)
     {
-        var requestData = new RequestData(requestDataInputDto.FirstName, requestDataInputDto.LastName);
+        var requestData = new RequestData(GuidGenerator.CreateSimpleGuid(), requestDataInputDto.FirstName, requestDataInputDto.LastName);
         await _processService.InitRequestAsync(processId, requestData, cancellationToken);
     }
 
@@ -64,9 +65,21 @@ public class Process1Controller : Controller
     }
 
     [HttpPost]
-    public async Task MakeProgress(MakeProgressInputDto inputDto, ProgressDataInputDto progressDataInputDto, CancellationToken cancellationToken = default)
+    public async Task MakeProgress(MakeProgressInputDto inputDto, CancellationToken cancellationToken = default)
     {
-        var progressData = new ProgressData(progressDataInputDto.Note);
+        await _processService.MakeProgressAsync(inputDto, null, cancellationToken);
+    }
+
+
+    /*
+     * Datası farklı her bir progress için 
+     * bunun gibi farklı methodlar oluşturulması gerekiyor
+     * Çünkü gelen data farklı olacak
+     */
+    [HttpPost]
+    public async Task MakeProgressGoToState1(MakeProgressInputDto inputDto, GoToState1ProgressDataInputDto progressDataInputDto, CancellationToken cancellationToken = default)
+    {
+        var progressData = new GoToState1ProgressData(GuidGenerator.CreateSimpleGuid(), progressDataInputDto.Note);
         await _processService.MakeProgressAsync(inputDto, progressData, cancellationToken);
     }
 }
