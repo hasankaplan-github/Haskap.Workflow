@@ -41,10 +41,15 @@ public class ProcessService : IProcessService
             .Select(x => x.CurrentState)
             .FirstAsync(cancellationToken);
 
+        var userRoleIds = await _workflowDbContext.UserRole
+            .Where(x => x.UserId == _currentUserIdProvider.CurrentUserId)
+            .Select(x => x.RoleId)
+            .ToListAsync(cancellationToken);
+
         var availablePaths = await _workflowDbContext.Path
             .Include(x => x.Command)
             .Include(x => x.Roles)
-            .Where(x => x.FromStateId == currentState.Id)
+            .Where(x => x.FromStateId == currentState.Id && x.Roles.Any(y => userRoleIds.Contains(y.RoleId)))
             .ToListAsync(cancellationToken);
 
         var outputDto = new GetAvailablePathsOutputDto
