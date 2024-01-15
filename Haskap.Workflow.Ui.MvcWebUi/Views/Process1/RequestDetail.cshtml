@@ -54,9 +54,9 @@
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 @foreach (var path in availablePaths)
                 {
-                    <li><a class="dropdown-item" onclick="makeProgress('@Model.Id', '@path.Command.Id', @Json.Serialize(path.ViewName));">@path.Command.DisplayName</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="makeProgress('@Model.Id', '@path.Command.Id', @Json.Serialize(path.ViewName));">@path.Command.DisplayName</a></li>
                 }
-                <li><a class="dropdown-item bg-danger" onclick="deleteRequest('@Model.Id');">Talebi Sil</a></li>
+                <li><a class="dropdown-item bg-danger" href="#" onclick="deleteRequest('@Model.Id');">Talebi Sil</a></li>
             </ul>
         </div>
     </div>
