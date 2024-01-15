@@ -31,10 +31,12 @@ public class Process1Controller : Controller
     }
 
     [HttpPost]
-    public async Task CreateRequest(Guid processId, RequestDataInputDto requestDataInputDto, CancellationToken cancellationToken = default)
+    public async Task<Guid> CreateRequest(Guid processId, RequestDataInputDto requestDataInputDto, CancellationToken cancellationToken = default)
     {
         var requestData = new RequestData(GuidGenerator.CreateSimpleGuid(), requestDataInputDto.FirstName, requestDataInputDto.LastName);
-        await _processService.InitRequestAsync(processId, requestData, cancellationToken);
+        var requestId = await _processService.InitRequestAsync(processId, requestData, cancellationToken);
+
+        return requestId;
     }
 
     public async Task<IActionResult> SearchRequest(CancellationToken cancellationToken = default)
