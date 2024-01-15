@@ -1,0 +1,56 @@
+﻿@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var antiforgeryToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+}
+
+
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            @* <i class="fas fa-text-width"></i> *@
+            Veri Girişi
+        </h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <label for="noteTextarea" class="form-label">Not</label>
+                <textarea id="noteTextarea" class="form-control" aria-describedby="Not" rows="7"></textarea>
+            </div>
+        </div>
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+        <button id="makeProgressWithNoteButton" class="btn btn-secondary" type="button">İşlemler</button>
+    </div>
+    <!-- /.card-footer -->
+</div>
+<!-- /.card -->
+
+
+<script>
+
+    $("#makeProgressWithNoteButton").click(function () {
+        $.ajax({
+            type: "POST",
+            headers: {
+                'RequestVerificationToken': '@antiforgeryToken'
+            },
+            url: "@Url.Action("MakeProgressWithNote", "Process1")",
+            data: {
+                requestId: '@ViewBag.RequestId',
+                commandId: '@ViewBag.CommandId',
+                note: $("#noteTextarea").val()
+            }
+        }).done(function (result, status, xhr) {
+            location.reload();
+        });
+    })
+
+</script>

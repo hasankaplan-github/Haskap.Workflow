@@ -77,9 +77,15 @@ public class Process1Controller : Controller
      * Çünkü gelen data farklı olacak
      */
     [HttpPost]
-    public async Task MakeProgressGoToState1(MakeProgressInputDto inputDto, GoToState1ProgressDataInputDto progressDataInputDto, CancellationToken cancellationToken = default)
+    public async Task MakeProgressWithNote(MakeProgressInputDto inputDto, NoteProgressDataInputDto progressDataInputDto, CancellationToken cancellationToken = default)
     {
-        var progressData = new GoToState1ProgressData(GuidGenerator.CreateSimpleGuid(), progressDataInputDto.Note);
+        var progressData = new NoteProgressData(GuidGenerator.CreateSimpleGuid(), progressDataInputDto.Note);
         await _processService.MakeProgressAsync(inputDto, progressData, cancellationToken);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> LoadProgressWithNoteViewComponent(MakeProgressInputDto inputDto, CancellationToken cancellationToken)
+    {
+        return ViewComponent(typeof(ViewComponents.Process1.ProgressWithNote), new { inputDto.RequestId, inputDto.CommandId });
     }
 }

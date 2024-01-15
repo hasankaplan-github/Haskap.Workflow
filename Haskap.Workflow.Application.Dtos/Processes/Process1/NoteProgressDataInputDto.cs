@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Haskap.Workflow.Application.Dtos.Processes.Process1;
-public class GoToState1ProgressDataInputDto
+public class NoteProgressDataInputDto
 {
     public string? Note { get; set; }
 }

@@ -69,6 +69,9 @@
 
 @section Scripts{
 
+    <script src="~/js/modalOperations.js" asp-append-version="true"></script>
+    <script src="~/js/process1Operations.js" asp-append-version="true"></script>
+
     <script>
 
         function deleteRequest(requestId) {
@@ -105,6 +108,8 @@
                 // modal içinde kaydet buttonunda /Process1/MakeProgressWithData1 methodu çağırılır
                 // her farklı viewName için farklı ViewComponent modal içinde açılır
                 // her kaydet methodunda farklı MakeProgressWithData1,2,3,4 çağırılır.
+                //ProgressWithNote
+                showProgressDataModal(requestId, commandId, viewName);
             } else {
                 $.ajax({
                     type: "POST",
