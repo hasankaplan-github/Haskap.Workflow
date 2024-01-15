@@ -8,30 +8,25 @@
 }
 
 
+<div class="modal-header bg-primary">
+    <h5 class="modal-title" id="staticBackdropLabel">Veri Girişi</h5>
+    <button type="button" class="btn-close cancelMakeProgress" @*data-bs-dismiss="modal"*@ aria-label="Close"></button>
+</div>
 
-<div class="card">
-    <div class="card-header">
-        <h3 class="card-title">
-            @* <i class="fas fa-text-width"></i> *@
-            Veri Girişi
-        </h3>
-    </div>
-    <!-- /.card-header -->
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-12">
-                <label for="noteTextarea" class="form-label">Not</label>
-                <textarea id="noteTextarea" class="form-control" aria-describedby="Not" rows="7"></textarea>
-            </div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <label for="noteTextarea" class="form-label">Not</label>
+            <textarea id="noteTextarea" class="form-control" aria-describedby="Not" rows="7"></textarea>
         </div>
     </div>
-    <!-- /.card-body -->
-    <div class="card-footer">
-        <button id="makeProgressWithNoteButton" class="btn btn-secondary" type="button">İşlemler</button>
-    </div>
-    <!-- /.card-footer -->
 </div>
-<!-- /.card -->
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary cancelMakeProgress" @*data-bs-dismiss="modal"*@ id="cancelMakeProgressButton">İptal</button>
+    <button type="button" class="btn btn-primary" @*data-bs-dismiss="modal"*@ id="makeProgressWithNoteButton"><i class="fas fa-save"></i> Kaydet</button>
+</div>
+
 
 
 <script>
@@ -51,6 +46,10 @@
         }).done(function (result, status, xhr) {
             location.reload();
         });
+    })
+
+    $(".cancelMakeProgress").click(function () {
+        hideProgressDataModal();
     })
 
 </script>

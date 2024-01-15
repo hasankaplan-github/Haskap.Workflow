@@ -15,3 +15,8 @@ function showProgressDataModal(requestId, commandId, viewName) {
     process1ProgressDataModal = new bootstrap.Modal(document.getElementById(modal.process1ProgressDataModalId), wizardModalOptions);
     process1ProgressDataModal.show();
 }
+
+function hideProgressDataModal() {
+    process1ProgressDataModal.hide();
+}
+
