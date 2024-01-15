@@ -2,9 +2,9 @@
 
 public static class Permissions
 {
-    public static class Recipe
+    public static class Workflow
     {
-        public const string Editor = "Permissions.Recipe.Editor";
-        public const string Admin = "Permissions.Recipe.Admin";
+        public const string User = "Permissions.Workflow.User";
+        public const string Admin = "Permissions.Workflow.Admin";
     }
 }

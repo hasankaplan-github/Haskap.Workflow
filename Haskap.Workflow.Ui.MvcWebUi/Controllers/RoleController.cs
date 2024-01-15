@@ -8,7 +8,7 @@ using Haskap.Workflow.Application.Contracts.Roles;
 
 namespace Haskap.Workflow.Ui.MvcWebUi.Controllers;
 
-[Authorize(Permissions.Recipe.Admin)]
+[Authorize(Permissions.Workflow.Admin)]
 public class RoleController : Controller
 {
     private readonly IRoleService _roleService;

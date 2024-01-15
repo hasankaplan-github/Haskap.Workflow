@@ -136,21 +136,21 @@ public class AccountController : Controller
         await _accountService.UpdateAsync(inputDto, cancellationToken);
     }
 
-    [Authorize(Permissions.Recipe.Admin)]
+    [Authorize(Permissions.Workflow.Admin)]
     [HttpGet]
     public async Task<IActionResult> Accounts(CancellationToken cancellationToken)
     {
         return View();
     }
 
-    [Authorize(Permissions.Recipe.Admin)]
+    [Authorize(Permissions.Workflow.Admin)]
     [HttpDelete]
     public async Task Delete(Guid userId, CancellationToken cancellationToken)
     {
         await _accountService.DeleteAsync(userId, cancellationToken);
     }
 
-    [Authorize(Permissions.Recipe.Admin)]
+    [Authorize(Permissions.Workflow.Admin)]
     [HttpPost]
     public async Task<JsonResult> Search(SearchParamsInputDto inputDto, JqueryDataTableParam jqueryDataTableParam, CancellationToken cancellationToken = default)
     {
@@ -158,28 +158,28 @@ public class AccountController : Controller
         return Json(result);
     }
 
-    [Authorize(Permissions.Recipe.Admin)]
+    [Authorize(Permissions.Workflow.Admin)]
     [HttpGet]
     public async Task<IActionResult> LoadUpdatePermissionsViewComponent(Guid userId, CancellationToken cancellationToken)
     {
         return ViewComponent(typeof(ViewComponents.Account.UpdatePermissions), new { userId });
     }
 
-    [Authorize(Permissions.Recipe.Admin)]
+    [Authorize(Permissions.Workflow.Admin)]
     [HttpPost]
     public async Task UpdatePermissions(UpdatePermissionsInputDto inputDto, CancellationToken cancellationToken)
     {
         await _accountService.UpdatePermissionsAsync(inputDto, cancellationToken);
     }
 
-    [Authorize(Permissions.Recipe.Admin)]
+    [Authorize(Permissions.Workflow.Admin)]
     [HttpGet]
     public async Task<IActionResult> LoadUpdateRolesViewComponent(Guid userId, CancellationToken cancellationToken)
     {
         return ViewComponent(typeof(ViewComponents.Account.UpdateRoles), new { userId });
     }
 
-    [Authorize(Permissions.Recipe.Admin)]
+    [Authorize(Permissions.Workflow.Admin)]
     [HttpPost]
     public async Task UpdateRoles(UpdateRolesInputDto inputDto, CancellationToken cancellationToken)
     {

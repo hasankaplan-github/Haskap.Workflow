@@ -14,7 +14,7 @@ namespace Haskap.Workflow.Ui.MvcWebUi.Controllers;
 [Authorize]
 public class Process1Controller : Controller
 {
-    private readonly Guid _process1Id = Guid.Parse("");
+    private readonly Guid _process1Id = Guid.Parse("c60f6f61-5766-41e4-b7c1-f25c09dd64b3");
     private readonly IProcess1Service _process1Service;
     private readonly IProcessService _processService;
 

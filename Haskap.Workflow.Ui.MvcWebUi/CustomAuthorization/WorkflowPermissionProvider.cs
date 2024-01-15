@@ -6,7 +6,7 @@ public class WorkflowPermissionProvider : PermissionProvider
 {
     public override void Define()
     {
-        AddPermission(nameof(Permissions.Recipe), Permissions.Recipe.Editor);
-        AddPermission(nameof(Permissions.Recipe), Permissions.Recipe.Admin);
+        AddPermission(nameof(Permissions.Workflow), Permissions.Workflow.User);
+        AddPermission(nameof(Permissions.Workflow), Permissions.Workflow.Admin);
     }
 }
