@@ -5,10 +5,13 @@ using Haskap.Workflow.Application.Dtos.Common.DataTable;
 using Haskap.Workflow.Application.Dtos.Processes;
 using Haskap.Workflow.Application.Dtos.Processes.Process1;
 using Haskap.Workflow.Domain.Process1Aggregate;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Haskap.Workflow.Ui.MvcWebUi.Controllers;
+
+[Authorize]
 public class Process1Controller : Controller
 {
     private readonly Guid _process1Id = Guid.Parse("");
