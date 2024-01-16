@@ -16,24 +16,6 @@ using System.Threading.Tasks;
 namespace Haskap.Workflow.Domain;
 public interface IWorkflowDbContext : IUnitOfWork
 {
-    EntityEntry<TEntity> Add<TEntity>(TEntity entity)
-        where TEntity : class;
-
-    ValueTask<EntityEntry<TEntity>> AddAsync<TEntity>(
-        TEntity entity,
-        CancellationToken cancellationToken = default)
-        where TEntity : class;
-
-    void AddRange(params object[] entities);
-
-    Task AddRangeAsync(params object[] entities);
-
-    void AddRange(IEnumerable<object> entities);
-
-    Task AddRangeAsync(
-        IEnumerable<object> entities,
-        CancellationToken cancellationToken = default);
-
     DbSet<Role> Role { get; set; }
     DbSet<User> User { get; set; }
     DbSet<UserRole> UserRole { get; set; }

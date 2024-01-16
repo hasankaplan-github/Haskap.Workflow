@@ -103,9 +103,7 @@
         }
 
         function makeProgress(requestId, commandId, viewName) {
-            alert(viewName);
             if (viewName) {
-                alert("hasan");
                 //open modal
                 // modal içinde kaydet buttonunda /Process1/MakeProgressWithData1 methodu çağırılır
                 // her farklı viewName için farklı ViewComponent modal içinde açılır
@@ -113,7 +111,6 @@
                 //ProgressWithNote
                 showProgressDataModal(requestId, commandId, viewName);
             } else {
-                alert("kaplan");
                 $.ajax({
                     type: "POST",
                     headers: {
