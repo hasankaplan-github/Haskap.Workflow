@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Haskap.Workflow.Domain.ProcessAggregate;
+namespace Haskap.Workflow.Domain.RequestAggregate;
 public class Progress : Entity
 {
     public Guid RequestId { get; private set; }

@@ -18,6 +18,7 @@ using Haskap.Workflow.Application.Contracts.Processes;
 using Haskap.Workflow.Application.UseCaseServices.Processes;
 using Haskap.Workflow.Application.UseCaseServices.Processes.Process1;
 using Haskap.Workflow.Application.Contracts.Processes.Process1;
+using Haskap.Workflow.Domain.ProcessAggregate;
 
 namespace Haskap.Workflow.Ui.MvcWebUi;
 
@@ -26,6 +27,7 @@ public static class ServiceCollectionExtensions
     public static void AddDomainServices(this IServiceCollection services)
     {
         services.AddTransient<UserDomainService>();
+        services.AddTransient<ProcessDomainService>();
     }
 
     public static void AddUseCaseServices(this IServiceCollection services)
@@ -33,7 +35,6 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IAccountService, AccountService>();
         services.AddTransient<IViewLevelExceptionService, ViewLevelExceptionService>();
         services.AddTransient<IRoleService, RoleService>();
-        services.AddTransient<IProcessService, ProcessService>();
         services.AddTransient<IProcess1Service, Process1Service>();
     }
 

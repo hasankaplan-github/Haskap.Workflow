@@ -23,21 +23,6 @@ public class ProcessEntityTypeConfiguration : BaseEntityTypeConfiguration<Proces
         builder.Property(x => x.Description)
             .HasMaxLength(ProcessConsts.MaxDescriptionLength);
 
-        builder.HasMany(x => x.States)
-            .WithOne()
-            .HasForeignKey(x => x.ProcessId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        builder.HasMany(x => x.Commands)
-            .WithOne()
-            .HasForeignKey(x => x.ProcessId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        builder.HasMany(x => x.Requests)
-            .WithOne()
-            .HasForeignKey(x => x.ProcessId)
-            .OnDelete(DeleteBehavior.Cascade);
-
         builder.HasMany(x => x.Paths)
             .WithOne()
             .HasForeignKey(x => x.ProcessId)

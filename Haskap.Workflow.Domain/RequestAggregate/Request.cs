@@ -1,14 +1,15 @@
 ﻿using Ardalis.GuardClauses;
 using Haskap.DddBase.Utilities.Guids;
 using Haskap.Workflow.Domain.Common;
+using Haskap.Workflow.Domain.StateAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Haskap.Workflow.Domain.ProcessAggregate;
-public class Request : Entity
+namespace Haskap.Workflow.Domain.RequestAggregate;
+public class Request : AggregateRoot
 {
     public Guid ProcessId { get; private set; }
     public Guid? OwnerUserId { get; private set; }
@@ -35,11 +36,11 @@ public class Request : Entity
         SetCurrentState(currentState);
     }
 
-    public Guid MakeProgress(State toState, Guid pathId, Guid ownerUserId)
+    public Guid MakeProgress(Domain.ProcessAggregate.Path path, Guid ownerUserId)
     {
-        SetCurrentState(toState);
-        
-        var progressId = AddProgress(pathId, ownerUserId);
+        SetCurrentState(path.ToState);
+
+        var progressId = AddProgress(path.Id, ownerUserId);
 
         return progressId;
     }

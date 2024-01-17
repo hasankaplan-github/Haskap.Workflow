@@ -1,4 +1,5 @@
-﻿using Haskap.Workflow.Domain.ProcessAggregate;
+﻿using Haskap.Workflow.Domain.CommandAggregate;
+using Haskap.Workflow.Domain.ProcessAggregate;
 using Haskap.Workflow.Domain.RoleAggregate;
 using Haskap.Workflow.Domain.Shared.Consts;
 using Microsoft.EntityFrameworkCore;
@@ -19,5 +20,10 @@ public class CommandEntityTypeConfiguration : BaseEntityTypeConfiguration<Comman
 
         builder.Property(x => x.DisplayName)
             .HasMaxLength(CommandConsts.MaxDisplayNameLength);
+
+        builder.HasOne<Process>()
+            .WithMany()
+            .HasForeignKey(x => x.ProcessId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

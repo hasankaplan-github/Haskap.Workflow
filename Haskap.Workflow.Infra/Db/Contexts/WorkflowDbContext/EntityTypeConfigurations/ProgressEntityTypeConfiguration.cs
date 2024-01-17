@@ -1,4 +1,4 @@
-﻿using Haskap.Workflow.Domain.ProcessAggregate;
+﻿using Haskap.Workflow.Domain.RequestAggregate;
 using Haskap.Workflow.Domain.RoleAggregate;
 using Haskap.Workflow.Domain.Shared.Consts;
 using Microsoft.EntityFrameworkCore;

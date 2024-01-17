@@ -1,5 +1,6 @@
 ﻿using Haskap.Workflow.Domain.ProcessAggregate;
 using Haskap.Workflow.Domain.Shared.Consts;
+using Haskap.Workflow.Domain.StateAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -21,5 +22,10 @@ public class StateEntityTypeConfiguration : BaseEntityTypeConfiguration<State>
 
         builder.Property(x => x.StateType)
             .HasConversion<string>();
+
+        builder.HasOne<Process>()
+            .WithMany()
+            .HasForeignKey(x => x.ProcessId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

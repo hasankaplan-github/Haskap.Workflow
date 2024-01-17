@@ -1,4 +1,5 @@
 ﻿using Haskap.Workflow.Domain.ProcessAggregate;
+using Haskap.Workflow.Domain.RequestAggregate;
 using Haskap.Workflow.Domain.Shared.Consts;
 using Haskap.Workflow.Domain.UserAggregate;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,11 @@ public class RequestEntityTypeConfiguration : BaseEntityTypeConfiguration<Reques
         builder.HasMany(x => x.Progresses)
             .WithOne()
             .HasForeignKey(x => x.RequestId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne<Process>()
+            .WithMany()
+            .HasForeignKey(x => x.ProcessId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -6,8 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Haskap.Workflow.Domain.ProcessAggregate;
-public class State : Entity
+namespace Haskap.Workflow.Domain.StateAggregate;
+public class State : AggregateRoot
 {
     public string DisplayName { get; private set; }
     public Guid ProcessId { get; private set; }
