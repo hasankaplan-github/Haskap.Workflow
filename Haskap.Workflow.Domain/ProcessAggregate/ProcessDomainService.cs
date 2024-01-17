@@ -28,7 +28,9 @@ public class ProcessDomainService : DomainService
 
     public async Task<Guid> InitRequestAsync(Guid processId, dynamic? requestData, CancellationToken cancellationToken)
     {
-        var startState = _workflowDbContext.State.FirstOrDefault(x => x.ProcessId == processId && x.StateType == StateType.StartState);
+        var startState = _workflowDbContext.State
+            .AsNoTracking()
+            .FirstOrDefault(x => x.ProcessId == processId && x.StateType == StateType.StartState);
         var newRequest = new Request(GuidGenerator.CreateSimpleGuid(), processId, _currentUserIdProvider.CurrentUserId.Value, startState);
         await _workflowDbContext.Request.AddAsync(newRequest, cancellationToken);
 
@@ -54,6 +56,7 @@ public class ProcessDomainService : DomainService
             .FirstAsync(cancellationToken);
 
         var path = await _workflowDbContext.Path
+            .AsNoTracking()
             .Include(x => x.ToState)
             .Where(x => x.FromStateId == request.CurrentStateId && x.CommandId == inputDto.CommandId)
             .FirstAsync(cancellationToken);
@@ -77,16 +80,19 @@ public class ProcessDomainService : DomainService
     public async Task<List<Path>> GetAvailablePathsAsync(Guid requestId, CancellationToken cancellationToken)
     {
         var currentStateId = await _workflowDbContext.Request
+            .AsNoTracking()
             .Where(x => x.Id == requestId)
             .Select(x => x.CurrentStateId)
             .FirstAsync(cancellationToken);
 
         var userRoleIds = await _workflowDbContext.UserRole
+            .AsNoTracking()
             .Where(x => x.UserId == _currentUserIdProvider.CurrentUserId)
             .Select(x => x.RoleId)
             .ToListAsync(cancellationToken);
 
         var availablePaths = await _workflowDbContext.Path
+            .AsNoTracking()
             .Include(x => x.Command)
             .Include(x => x.Roles)
             .Where(x => x.FromStateId == currentStateId && x.Roles.Any(y => userRoleIds.Contains(y.RoleId)))
