@@ -14,6 +14,8 @@ using Haskap.Workflow.Domain;
 using Haskap.Workflow.Domain.Shared.Enums;
 using Haskap.Workflow.Application.Dtos.Common.DataTable;
 using Haskap.Workflow.Application.Dtos.Processes;
+using Haskap.DddBase.Utilities.Guids;
+using Haskap.Workflow.Domain.ProcessAggregate;
 
 namespace Haskap.Workflow.Application.UseCaseServices.Processes.Process1;
 public class Process1Service : IProcess1Service
@@ -21,12 +23,26 @@ public class Process1Service : IProcess1Service
     private readonly IMapper _mapper;
     private readonly IWorkflowDbContext _workflowDbContext;
     private readonly ICurrentUserIdProvider _currentUserIdProvider;
+    private readonly ProcessDomainService _processDomainService;
 
-    public Process1Service(IMapper mapper, IWorkflowDbContext workflowDbContext, ICurrentUserIdProvider currentUserIdProvider)
+    public Process1Service(
+        IMapper mapper,
+        IWorkflowDbContext workflowDbContext,
+        ICurrentUserIdProvider currentUserIdProvider,
+        ProcessDomainService processDomainService)
     {
         _mapper = mapper;
         _workflowDbContext = workflowDbContext;
         _currentUserIdProvider = currentUserIdProvider;
+        _processDomainService = processDomainService;
+    }
+
+    public async Task<Guid> CreateRequest(Guid processId, RequestDataInputDto requestDataInputDto, CancellationToken cancellationToken)
+    {
+        var requestData = new RequestData(GuidGenerator.CreateSimpleGuid(), requestDataInputDto.FirstName, requestDataInputDto.LastName);
+        var requestId = await _processDomainService.InitRequestAsync(processId, requestData, cancellationToken);
+
+        return requestId;
     }
 
     public async Task DeleteRequestAsync(DeleteRequestInputDto inputDto, CancellationToken cancellationToken)
@@ -34,6 +50,13 @@ public class Process1Service : IProcess1Service
         await _workflowDbContext.Request
             .Where(x => x.Id == inputDto.RequestId)
             .ExecuteDeleteAsync();
+    }
+
+    public async Task<List<PathOutputDto>> GetAvailablePathsAsync(Guid requestId, CancellationToken cancellationToken)
+    {
+        var availablePaths = await _processDomainService.GetAvailablePathsAsync(requestId, cancellationToken);
+
+        return _mapper.Map<List<PathOutputDto>>(availablePaths);
     }
 
     public async Task<RequestDetailOutputDto> GetRequestDetailAsync(Guid requestId, CancellationToken cancellationToken)
@@ -65,7 +88,16 @@ public class Process1Service : IProcess1Service
         return output;
     }
 
-    
+    public async Task MakeProgressAsync(MakeProgressInputDto inputDto, CancellationToken cancellationToken)
+    {
+        await _processDomainService.MakeProgressAsync(inputDto, null, cancellationToken);
+    }
+
+    public async Task MakeProgressWithNoteAsync(MakeProgressInputDto inputDto, NoteProgressDataInputDto progressDataInputDto, CancellationToken cancellationToken)
+    {
+        var progressData = new NoteProgressData(GuidGenerator.CreateSimpleGuid(), progressDataInputDto.Note);
+        await _processDomainService.MakeProgressAsync(inputDto, progressData, cancellationToken);
+    }
 
     public async Task<JqueryDataTableResult> SearchRequestAsync(SearchParamsInputDto inputDto, JqueryDataTableParam jqueryDataTableParam, CancellationToken cancellationToken)
     {
