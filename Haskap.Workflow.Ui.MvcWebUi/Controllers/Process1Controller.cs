@@ -5,6 +5,7 @@ using Haskap.Workflow.Application.Contracts.Processes.Process1;
 using Haskap.Workflow.Application.Dtos.Common.DataTable;
 using Haskap.Workflow.Application.Dtos.Processes;
 using Haskap.Workflow.Application.Dtos.Processes.Process1;
+using Haskap.Workflow.Application.UseCaseServices.Processes.Process1;
 using Haskap.Workflow.Domain.Process1Aggregate;
 using Haskap.Workflow.Domain.ProcessAggregate;
 using Microsoft.AspNetCore.Authorization;
@@ -19,17 +20,11 @@ public class Process1Controller : Controller
 {
     private readonly Guid _process1Id = Guid.Parse("c60f6f61-5766-41e4-b7c1-f25c09dd64b3");
     private readonly IProcess1Service _process1Service;
-    private readonly ProcessDomainService _processDomainService;
-    private readonly IMapper _mapper;
 
     public Process1Controller(
-        IProcess1Service process1Service,
-        ProcessDomainService processDomainService,
-        IMapper mapper)
+        IProcess1Service process1Service)
     {
         _process1Service = process1Service;
-        _processDomainService = processDomainService;
-        _mapper = mapper;
     }
 
     public async Task<IActionResult> CreateRequest(CancellationToken cancellationToken = default)
@@ -41,8 +36,7 @@ public class Process1Controller : Controller
     [HttpPost]
     public async Task<Guid> CreateRequest(Guid processId, RequestDataInputDto requestDataInputDto, CancellationToken cancellationToken = default)
     {
-        var requestData = new RequestData(GuidGenerator.CreateSimpleGuid(), requestDataInputDto.FirstName, requestDataInputDto.LastName);
-        var requestId = await _processDomainService.InitRequestAsync(processId, requestData, cancellationToken);
+        var requestId = await _process1Service.CreateRequest(processId, requestDataInputDto, cancellationToken);
 
         return requestId;
     }
@@ -65,8 +59,7 @@ public class Process1Controller : Controller
     {
         var output = await _process1Service.GetRequestDetailAsync(requestId, cancellationToken);
         
-        var availablePaths = await _processDomainService.GetAvailablePathsAsync(requestId, cancellationToken);
-        ViewBag.AvailablePaths = _mapper.Map<List<PathOutputDto>>(availablePaths);
+        ViewBag.AvailablePaths = await _process1Service.GetAvailablePathsAsync(requestId, cancellationToken);
 
         return View(output);
     }
@@ -80,7 +73,7 @@ public class Process1Controller : Controller
     [HttpPost]
     public async Task MakeProgress(MakeProgressInputDto inputDto, CancellationToken cancellationToken = default)
     {
-        await _processDomainService.MakeProgressAsync(inputDto, null, cancellationToken);
+        await _process1Service.MakeProgressAsync(inputDto, cancellationToken);
     }
 
 
@@ -92,8 +85,7 @@ public class Process1Controller : Controller
     [HttpPost]
     public async Task MakeProgressWithNote(MakeProgressInputDto inputDto, NoteProgressDataInputDto progressDataInputDto, CancellationToken cancellationToken = default)
     {
-        var progressData = new NoteProgressData(GuidGenerator.CreateSimpleGuid(), progressDataInputDto.Note);
-        await _processDomainService.MakeProgressAsync(inputDto, progressData, cancellationToken);
+        await _process1Service.MakeProgressWithNoteAsync(inputDto, progressDataInputDto, cancellationToken);
     }
 
     [HttpGet]
