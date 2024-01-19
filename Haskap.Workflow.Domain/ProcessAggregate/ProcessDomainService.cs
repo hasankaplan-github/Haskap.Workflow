@@ -29,7 +29,6 @@ public class ProcessDomainService : DomainService
     public async Task<Guid> InitRequestAsync(Guid processId, dynamic? requestData, CancellationToken cancellationToken)
     {
         var startState = _workflowDbContext.State
-            .AsNoTracking()
             .FirstOrDefault(x => x.ProcessId == processId && x.StateType == StateType.StartState);
         var newRequest = new Request(GuidGenerator.CreateSimpleGuid(), processId, _currentUserIdProvider.CurrentUserId.Value, startState);
         await _workflowDbContext.Request.AddAsync(newRequest, cancellationToken);
@@ -56,7 +55,6 @@ public class ProcessDomainService : DomainService
             .FirstAsync(cancellationToken);
 
         var path = await _workflowDbContext.Path
-            .AsNoTracking()
             .Include(x => x.ToState)
             .Where(x => x.FromStateId == request.CurrentStateId && x.CommandId == inputDto.CommandId)
             .FirstAsync(cancellationToken);
