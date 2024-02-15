@@ -291,24 +291,9 @@ public class AccountService : UseCaseService, IAccountService
             .Where(x => x.Id == inputDto.UserId)
             .FirstAsync(cancellationToken);
 
-        var toBeDeleted = user.Permissions
-            .IntersectBy(inputDto.UncheckedPermissions ?? Enumerable.Empty<string>(), x => x.Name)
-            .ToList();
+        user.RemovePermissions(inputDto.UncheckedPermissions);
 
-        foreach (var permission in toBeDeleted)
-        {
-            user.RemovePermission(permission);
-        }
-
-
-        var toBeAdded = (inputDto.CheckedPermissions ?? Enumerable.Empty<string>())
-            .Except(user.Permissions.Select(x => x.Name))
-            .ToList();
-
-        foreach (var permissionName in toBeAdded)
-        {
-            user.AddPermission(permissionName);
-        }
+        user.AddPermissions(inputDto.CheckedPermissions);
 
         await _recipeDbContext.SaveChangesAsync(cancellationToken);
     }
@@ -336,24 +321,9 @@ public class AccountService : UseCaseService, IAccountService
             .Where(x => x.Id == inputDto.UserId)
             .FirstAsync(cancellationToken);
 
-        var toBeDeleted = user.Roles
-            .IntersectBy(inputDto.UncheckedRoles ?? Enumerable.Empty<Guid>(), x => x.RoleId)
-            .ToList();
+        user.RemoveRoles(inputDto.UncheckedRoles);
 
-        foreach (var userRole in toBeDeleted)
-        {
-            user.RemoveRole(userRole);
-        }
-
-
-        var toBeAdded = (inputDto.CheckedRoles ?? Enumerable.Empty<Guid>())
-            .Except(user.Roles.Select(x => x.RoleId))
-            .ToList();
-
-        foreach (var roleId in toBeAdded)
-        {
-            user.AddRole(roleId);
-        }
+        user.AddRoles(inputDto.CheckedRoles);
 
         await _recipeDbContext.SaveChangesAsync(cancellationToken);
     }

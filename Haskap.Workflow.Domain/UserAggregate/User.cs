@@ -44,6 +44,23 @@ public class User : AggregateRoot, ISoftDeletable
         _permissions.Add(new Permission(permissionName));
     }
 
+    public void AddPermissions(IEnumerable<string> checkedPermissions)
+    {
+        if (checkedPermissions is null || !checkedPermissions.Any())
+        {
+            return;
+        }
+
+        var toBeAdded = checkedPermissions
+           .Except(_permissions.Select(x => x.Name))
+           .ToList();
+
+        foreach (var permissionName in toBeAdded)
+        {
+            AddPermission(permissionName);
+        }
+    }
+
     public void RemovePermission(string permissionName)
     {
         var toBeRemoved = _permissions.FirstOrDefault(x => x.Name.Equals(permissionName));
@@ -53,6 +70,28 @@ public class User : AggregateRoot, ISoftDeletable
     public void RemovePermission(Permission permission)
     {
         _permissions.Remove(permission);
+    }
+
+    public void RemovePermissions(IEnumerable<string> uncheckedPermissions)
+    {
+        if (uncheckedPermissions is null || !uncheckedPermissions.Any())
+        {
+            return;
+        }
+
+        if (!_permissions.Any())
+        {
+            return;
+        }
+
+        var toBeDeleted = _permissions
+            .IntersectBy(uncheckedPermissions, x => x.Name)
+            .ToList();
+
+        foreach (var permission in toBeDeleted)
+        {
+            RemovePermission(permission);
+        }
     }
 
     public void SetFirstName(string firstName)
@@ -105,6 +144,23 @@ public class User : AggregateRoot, ISoftDeletable
         _roles.Add(new UserRole(GuidGenerator.CreateSimpleGuid()) { RoleId = roleId, UserId = Id });
     }
 
+    public void AddRoles(IEnumerable<Guid> checkedRoleIds)
+    {
+        if (checkedRoleIds is null || !checkedRoleIds.Any())
+        {
+            return;
+        }
+
+        var toBeAdded = checkedRoleIds
+            .Except(_roles.Select(x => x.RoleId))
+            .ToList();
+
+        foreach (var roleId in toBeAdded)
+        {
+            AddRole(roleId);
+        }
+    }
+
     public void RemoveRole(Guid roleId)
     {
         var toBeRemoved = _roles.Where(x => x.RoleId == roleId).First();
@@ -114,5 +170,27 @@ public class User : AggregateRoot, ISoftDeletable
     public void RemoveRole(UserRole role)
     {
         _roles.Remove(role);
+    }
+
+    public void RemoveRoles(IEnumerable<Guid> uncheckedRoleIds)
+    {
+        if (uncheckedRoleIds is null || !uncheckedRoleIds.Any())
+        {
+            return;
+        }
+
+        if (!_roles.Any())
+        {
+            return;
+        }
+
+        var toBeDeleted = _roles
+            .IntersectBy(uncheckedRoleIds, x => x.RoleId)
+            .ToList();
+
+        foreach (var userRole in toBeDeleted)
+        {
+            RemoveRole(userRole);
+        }
     }
 }
