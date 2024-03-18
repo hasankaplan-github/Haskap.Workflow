@@ -144,24 +144,9 @@ public class RoleService : UseCaseService, IRoleService
             .Where(x => x.Id == inputDto.RoleId)
             .FirstAsync(cancellationToken);
 
-        var toBeDeleted = role.Permissions
-            .IntersectBy(inputDto.UncheckedPermissions ?? Enumerable.Empty<string>(), x => x.Name)
-            .ToList();
+        role.RemovePermissions(inputDto.UncheckedPermissions);
 
-        foreach (var permission in toBeDeleted)
-        {
-            role.RemovePermission(permission);
-        }
-
-
-        var toBeAdded = (inputDto.CheckedPermissions ?? Enumerable.Empty<string>())
-            .Except(role.Permissions.Select(x => x.Name))
-            .ToList();
-        
-        foreach (var permissionName in toBeAdded)
-        {
-            role.AddPermission(permissionName);
-        }
+        role.AddPermissions(inputDto.CheckedPermissions);
 
         await _recipeDbContext.SaveChangesAsync(cancellationToken);
     }

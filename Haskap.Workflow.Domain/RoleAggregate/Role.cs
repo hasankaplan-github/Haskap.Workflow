@@ -4,6 +4,7 @@ using Haskap.Workflow.Domain.RoleAggregate.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,5 +56,44 @@ public class Role : AggregateRoot
     public void RemovePermission(Permission permission)
     {
         _permissions.Remove(permission);
+    }
+
+    public void AddPermissions(IEnumerable<string> checkedPermissions)
+    {
+        if (checkedPermissions is null || !checkedPermissions.Any())
+        {
+            return;
+        }
+
+        var toBeAdded = checkedPermissions
+           .Except(_permissions.Select(x => x.Name))
+           .ToList();
+
+        foreach (var permissionName in toBeAdded)
+        {
+            AddPermission(permissionName);
+        }
+    }
+
+    public void RemovePermissions(IEnumerable<string> uncheckedPermissions)
+    {
+        if (uncheckedPermissions is null || !uncheckedPermissions.Any())
+        {
+            return;
+        }
+
+        if (!_permissions.Any())
+        {
+            return;
+        }
+
+        var toBeDeleted = _permissions
+            .IntersectBy(uncheckedPermissions, x => x.Name)
+            .ToList();
+
+        foreach (var permission in toBeDeleted)
+        {
+            RemovePermission(permission);
+        }
     }
 }
