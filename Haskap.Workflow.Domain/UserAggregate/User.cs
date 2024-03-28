@@ -193,4 +193,18 @@ public class User : AggregateRoot, ISoftDeletable
             RemoveRole(userRole);
         }
     }
+
+    public void UpdateRoles(IEnumerable<Guid> uncheckedRoleIds, IEnumerable<Guid> checkedRoleIds)
+    {
+        RemoveRoles(uncheckedRoleIds);
+
+        AddRoles(checkedRoleIds);
+    }
+
+    public void UpdatePermissions(IEnumerable<string> uncheckedPermissions, IEnumerable<string> checkedPermissions)
+    {
+        RemovePermissions(uncheckedPermissions);
+
+        AddPermissions(checkedPermissions);
+    }
 }

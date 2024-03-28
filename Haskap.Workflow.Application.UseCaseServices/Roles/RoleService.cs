@@ -144,9 +144,7 @@ public class RoleService : UseCaseService, IRoleService
             .Where(x => x.Id == inputDto.RoleId)
             .FirstAsync(cancellationToken);
 
-        role.RemovePermissions(inputDto.UncheckedPermissions);
-
-        role.AddPermissions(inputDto.CheckedPermissions);
+        role.UpdatePermissions(inputDto.UncheckedPermissions, inputDto.CheckedPermissions);
 
         await _recipeDbContext.SaveChangesAsync(cancellationToken);
     }

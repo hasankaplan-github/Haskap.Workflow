@@ -96,4 +96,11 @@ public class Role : AggregateRoot
             RemovePermission(permission);
         }
     }
+
+    public void UpdatePermissions(IEnumerable<string> uncheckedPermissions, IEnumerable<string> checkedPermissions)
+    {
+        RemovePermissions(uncheckedPermissions);
+
+        AddPermissions(checkedPermissions);
+    }
 }

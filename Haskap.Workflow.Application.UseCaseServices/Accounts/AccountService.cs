@@ -291,9 +291,7 @@ public class AccountService : UseCaseService, IAccountService
             .Where(x => x.Id == inputDto.UserId)
             .FirstAsync(cancellationToken);
 
-        user.RemovePermissions(inputDto.UncheckedPermissions);
-
-        user.AddPermissions(inputDto.CheckedPermissions);
+        user.UpdatePermissions(inputDto.UncheckedPermissions, inputDto.CheckedPermissions);
 
         await _recipeDbContext.SaveChangesAsync(cancellationToken);
     }
@@ -321,9 +319,7 @@ public class AccountService : UseCaseService, IAccountService
             .Where(x => x.Id == inputDto.UserId)
             .FirstAsync(cancellationToken);
 
-        user.RemoveRoles(inputDto.UncheckedRoles);
-
-        user.AddRoles(inputDto.CheckedRoles);
+        user.UpdateRoles(inputDto.UncheckedRoles, inputDto.CheckedRoles);
 
         await _recipeDbContext.SaveChangesAsync(cancellationToken);
     }
