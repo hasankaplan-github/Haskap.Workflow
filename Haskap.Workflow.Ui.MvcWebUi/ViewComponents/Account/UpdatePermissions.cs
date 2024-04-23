@@ -2,9 +2,9 @@
 using Haskap.Workflow.Application.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Haskap.DddBase.Presentation.CustomAuthorization;
-using Haskap.Workflow.Domain.UserAggregate;
-using Haskap.Workflow.Application.Dtos.Accounts;
-using Haskap.Workflow.Application.Contracts.Accounts;
+using Haskap.DddBase.Domain.UserAggregate;
+using Haskap.DddBase.Application.Dtos.Accounts;
+using Haskap.DddBase.Application.Contracts.Accounts;
 
 namespace Haskap.Workflow.Ui.MvcWebUi.ViewComponents.Account;
 

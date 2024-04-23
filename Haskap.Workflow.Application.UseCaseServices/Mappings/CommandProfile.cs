@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Haskap.Workflow.Application.UseCaseServices.Mappings;
 
-internal class CommandProfile : Profile
+public class CommandProfile : Profile
 {
     public CommandProfile()
     {

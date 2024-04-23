@@ -2,9 +2,7 @@
 using Haskap.Workflow.Domain.Process1Aggregate;
 using Haskap.Workflow.Domain.ProcessAggregate;
 using Haskap.Workflow.Domain.RequestAggregate;
-using Haskap.Workflow.Domain.RoleAggregate;
 using Haskap.Workflow.Domain.StateAggregate;
-using Haskap.Workflow.Domain.UserAggregate;
 using Haskap.Workflow.Domain.ViewLevelExceptionAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -16,11 +14,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Haskap.Workflow.Domain;
-public interface IWorkflowDbContext : IUnitOfWork
+public interface IWorkflowDbContext : IBaseDbContext
 {
-    DbSet<Role> Role { get; set; }
-    DbSet<User> User { get; set; }
-    DbSet<UserRole> UserRole { get; set; }
     DbSet<ViewLevelException> ViewLevelException { get; set; }
 
     DbSet<Process> Process { get; set; }

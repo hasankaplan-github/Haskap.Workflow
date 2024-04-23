@@ -3,9 +3,6 @@ using Haskap.DddBase.Infra.Db.Contexts.NpgsqlDbContext;
 using Haskap.DddBase.Domain.Providers;
 using Haskap.Workflow.Domain;
 using Haskap.Workflow.Domain.ViewLevelExceptionAggregate;
-using Haskap.Workflow.Domain.RoleAggregate;
-using Haskap.Workflow.Domain.UserAggregate;
-using Haskap.Workflow.Domain.Common;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.Linq.Expressions;
 using Haskap.Workflow.Domain.ProcessAggregate;
@@ -34,9 +31,6 @@ public class AppDbContext : BaseEfCoreNpgsqlDbContext, IWorkflowDbContext
         base.OnModelCreating(builder);
     }
 
-    public DbSet<Role> Role { get; set; }
-    public DbSet<User> User { get; set; }
-    public DbSet<UserRole> UserRole { get; set; }
     public DbSet<ViewLevelException> ViewLevelException { get; set; }
 
     public DbSet<Process> Process { get; set; }

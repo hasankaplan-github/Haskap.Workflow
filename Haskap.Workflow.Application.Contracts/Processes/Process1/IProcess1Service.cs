@@ -1,4 +1,4 @@
-﻿using Haskap.Workflow.Application.Dtos.Common.DataTable;
+﻿using Haskap.DddBase.Application.Dtos.Common.DataTable;
 using Haskap.Workflow.Application.Dtos.Processes;
 using Haskap.Workflow.Application.Dtos.Processes.Process1;
 using System;

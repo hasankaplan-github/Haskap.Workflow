@@ -4,8 +4,7 @@ using Haskap.Workflow.Ui.MvcWebUi.Models;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 using Haskap.DddBase.Presentation.CustomAuthorization;
-using Haskap.Workflow.Domain.UserAggregate;
-using Haskap.Workflow.Application.Contracts.Roles;
+using Haskap.DddBase.Application.Contracts.Roles;
 
 namespace Haskap.Workflow.Ui.MvcWebUi.ViewComponents.Role;
 

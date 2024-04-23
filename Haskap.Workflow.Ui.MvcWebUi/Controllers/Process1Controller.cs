@@ -2,7 +2,7 @@
 using Haskap.DddBase.Utilities.Guids;
 using Haskap.Workflow.Application.Contracts.Processes;
 using Haskap.Workflow.Application.Contracts.Processes.Process1;
-using Haskap.Workflow.Application.Dtos.Common.DataTable;
+using Haskap.DddBase.Application.Dtos.Common.DataTable;
 using Haskap.Workflow.Application.Dtos.Processes;
 using Haskap.Workflow.Application.Dtos.Processes.Process1;
 using Haskap.Workflow.Application.UseCaseServices.Processes.Process1;

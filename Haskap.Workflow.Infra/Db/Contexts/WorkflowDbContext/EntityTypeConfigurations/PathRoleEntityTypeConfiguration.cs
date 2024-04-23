@@ -1,6 +1,5 @@
 ﻿using Haskap.Workflow.Domain.ProcessAggregate;
-using Haskap.Workflow.Domain.RoleAggregate;
-using Haskap.Workflow.Domain.UserAggregate;
+using Haskap.DddBase.Domain.RoleAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

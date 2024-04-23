@@ -1,8 +1,9 @@
 ﻿@using Haskap.Workflow.Application.Dtos;
-@using Haskap.Workflow.Application.Dtos.Common;
+@using Haskap.DddBase.Application.Dtos.Common;
 @using Haskap.DddBase.Presentation.CustomAuthorization;
 @using Haskap.Workflow.Ui.MvcWebUi.CustomAuthorization;
 @using Haskap.DddBase.Domain.Providers;
+@using System.Collections.ObjectModel;
 
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
 
@@ -11,7 +12,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
-@model Dictionary<string, List<PermissionRequirement>>
+@model ReadOnlyDictionary<string, List<PermissionRequirement>>
 
 @{
     var isFirstPermissionGroup = true;

@@ -1,10 +1,9 @@
-﻿using Haskap.Workflow.Application.Dtos.Roles;
+﻿using Haskap.DddBase.Application.Dtos.Roles;
 using Haskap.Workflow.Ui.MvcWebUi.CustomAuthorization;
-using Haskap.DddBase.Domain.Providers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Haskap.Workflow.Application.Dtos.Common.DataTable;
-using Haskap.Workflow.Application.Contracts.Roles;
+using Haskap.DddBase.Application.Dtos.Common.DataTable;
+using Haskap.DddBase.Application.Contracts.Roles;
 
 namespace Haskap.Workflow.Ui.MvcWebUi.Controllers;
 

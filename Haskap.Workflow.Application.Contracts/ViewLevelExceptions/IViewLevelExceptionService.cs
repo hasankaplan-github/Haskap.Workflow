@@ -1,5 +1,4 @@
-﻿using Haskap.Workflow.Application.Dtos.Accounts;
-using Haskap.Workflow.Application.Dtos.ViewLevelExceptions;
+﻿using Haskap.Workflow.Application.Dtos.ViewLevelExceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

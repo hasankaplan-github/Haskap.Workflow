@@ -22,7 +22,10 @@ using Haskap.Workflow.Application.Contracts;
 using Haskap.Workflow.Application.Dtos.ViewLevelExceptions;
 using Haskap.Workflow.Ui.MvcWebUi.GlobalExceptionHandling;
 using Microsoft.AspNetCore.Mvc;
-using Haskap.Workflow.Application.UseCaseServices.Accounts;
+using Haskap.Workflow.Application.UseCaseServices.Processes.Process1;
+using Haskap.DddBase.Application.UseCaseServices.Mappings;
+using System.Data;
+using Haskap.DddBase.Application.UseCaseServices.Accounts;
 
 //CultureInfo ci = new CultureInfo(Thread.CurrentThread.CurrentCulture.Name);
 CultureInfo cultureInfo = new CultureInfo("tr-tr"); //Thread.CurrentThread.CurrentCulture.Clone() as CultureInfo;
@@ -67,8 +70,8 @@ builder.Services.AddEfInterceptors();
 builder.Services.AddExternalServices();
 builder.Services.AddCustomAuthorization();
 
-builder.Services.AddMediatR(x => x.RegisterServicesFromAssemblies(typeof(AccountService).Assembly/*, typeof(CheckForDuplicateCreditCardTypeNameEventHandler).Assembly*/));
-builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
+builder.Services.AddMediatR(x => x.RegisterServicesFromAssemblies(typeof(Process1Service).Assembly, typeof(AccountService).Assembly/*, typeof(CheckForDuplicateCreditCardTypeNameEventHandler).Assembly*/));
+builder.Services.AddAutoMapper(typeof(UserProfile).Assembly, typeof(CommandProfile).Assembly);
 
 
 //builder.Services.AddHttpClient<DugunSalonuHttpClient>(httpClient =>

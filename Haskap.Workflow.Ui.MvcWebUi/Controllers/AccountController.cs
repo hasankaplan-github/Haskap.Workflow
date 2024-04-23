@@ -1,8 +1,8 @@
 ﻿using Haskap.DddBase.Domain.Providers;
 using Haskap.DddBase.Domain.Shared.Consts;
-using Haskap.Workflow.Application.Contracts.Accounts;
-using Haskap.Workflow.Application.Dtos.Accounts;
-using Haskap.Workflow.Application.Dtos.Common.DataTable;
+using Haskap.DddBase.Application.Contracts.Accounts;
+using Haskap.DddBase.Application.Dtos.Accounts;
+using Haskap.DddBase.Application.Dtos.Common.DataTable;
 using Haskap.Workflow.Ui.MvcWebUi.CustomAuthorization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;

@@ -3,22 +3,23 @@ using Haskap.DddBase.Infra.Providers;
 using Haskap.Workflow.Infra.Db.Contexts.WorkflowDbContext;
 using Microsoft.EntityFrameworkCore;
 using Haskap.Workflow.Domain;
-using Haskap.Workflow.Application.UseCaseServices.Accounts;
+using Haskap.DddBase.Application.UseCaseServices.Accounts;
 using Haskap.DddBase.Infra.Db.Interceptors;
 using Haskap.Workflow.Ui.MvcWebUi.CustomAuthorization;
 using Microsoft.AspNetCore.Authorization;
 using Haskap.DddBase.Presentation.CustomAuthorization;
 using Haskap.Workflow.Application.UseCaseServices.ViewLevelExceptions;
-using Haskap.Workflow.Domain.UserAggregate;
-using Haskap.Workflow.Application.UseCaseServices.Roles;
-using Haskap.Workflow.Application.Contracts.Accounts;
-using Haskap.Workflow.Application.Contracts.Roles;
+using Haskap.DddBase.Domain.UserAggregate;
+using Haskap.DddBase.Application.UseCaseServices.Roles;
+using Haskap.DddBase.Application.Contracts.Accounts;
+using Haskap.DddBase.Application.Contracts.Roles;
 using Haskap.Workflow.Application.Contracts.ViewLevelExceptions;
 using Haskap.Workflow.Application.Contracts.Processes;
 using Haskap.Workflow.Application.UseCaseServices.Processes;
 using Haskap.Workflow.Application.UseCaseServices.Processes.Process1;
 using Haskap.Workflow.Application.Contracts.Processes.Process1;
 using Haskap.Workflow.Domain.ProcessAggregate;
+using Haskap.DddBase.Domain;
 
 namespace Haskap.Workflow.Ui.MvcWebUi;
 
@@ -72,6 +73,7 @@ public static class ServiceCollectionExtensions
         });
 
         services.AddScoped<IWorkflowDbContext, AppDbContext>();
+        services.AddScoped<IBaseDbContext, AppDbContext>();
     }
 
     public static void AddCustomAuthorization(this IServiceCollection services)

@@ -1,7 +1,6 @@
 ﻿using Haskap.Workflow.Domain.ProcessAggregate;
 using Haskap.Workflow.Domain.RequestAggregate;
-using Haskap.Workflow.Domain.Shared.Consts;
-using Haskap.Workflow.Domain.UserAggregate;
+using Haskap.DddBase.Domain.UserAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
