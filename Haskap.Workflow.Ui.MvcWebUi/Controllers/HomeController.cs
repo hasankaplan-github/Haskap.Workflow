@@ -7,7 +7,7 @@ using System.Net;
 using System.Text.Json;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
-using Haskap.Workflow.Application.Contracts.ViewLevelExceptions;
+using Haskap.DddBase.Application.Contracts.ViewLevelExceptions;
 
 namespace Haskap.Workflow.Ui.MvcWebUi.Controllers;
 

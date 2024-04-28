@@ -8,16 +8,12 @@ using Haskap.DddBase.Infra.Db.Interceptors;
 using Haskap.Workflow.Ui.MvcWebUi.CustomAuthorization;
 using Microsoft.AspNetCore.Authorization;
 using Haskap.DddBase.Presentation.CustomAuthorization;
-using Haskap.Workflow.Application.UseCaseServices.ViewLevelExceptions;
 using Haskap.DddBase.Domain.UserAggregate;
-using Haskap.DddBase.Application.UseCaseServices.Roles;
-using Haskap.DddBase.Application.Contracts.Accounts;
-using Haskap.DddBase.Application.Contracts.Roles;
-using Haskap.Workflow.Application.Contracts.ViewLevelExceptions;
 using Haskap.Workflow.Application.UseCaseServices.Processes.Process1;
 using Haskap.Workflow.Application.Contracts.Processes.Process1;
 using Haskap.Workflow.Domain.ProcessAggregate;
 using Haskap.DddBase.Domain;
+using Haskap.DddBase.Application.UseCaseServices;
 
 namespace Haskap.Workflow.Ui.MvcWebUi;
 
@@ -31,14 +27,15 @@ public static class ServiceCollectionExtensions
 
     public static void AddUseCaseServices(this IServiceCollection services)
     {
-        services.AddTransient<IAccountService, AccountService>();
-        services.AddTransient<IViewLevelExceptionService, ViewLevelExceptionService>();
-        services.AddTransient<IRoleService, RoleService>();
+        services.AddBaseServices();
+
         services.AddTransient<IProcess1Service, Process1Service>();
     }
 
     public static void AddProviders(this IServiceCollection services)
     {
+        services.AddBaseProviders();
+
         services.AddSingleton<ILocalDateTimeProvider, LocalDateTimeProvider>();
         //services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
         //services.AddSingleton<IJwtProvider, JwtProvider>();

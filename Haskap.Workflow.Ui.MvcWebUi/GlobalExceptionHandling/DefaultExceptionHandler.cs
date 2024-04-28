@@ -1,14 +1,13 @@
 ﻿using Haskap.DddBase.Domain;
 using Haskap.DddBase.Presentation;
-using Haskap.Workflow.Application.Dtos.ViewLevelExceptions;
-using Haskap.Workflow.Application.UseCaseServices.ViewLevelExceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 using static System.Net.Mime.MediaTypeNames;
 using System.Net;
 using System.Text.Json;
 using System;
-using Haskap.Workflow.Application.Contracts.ViewLevelExceptions;
+using Haskap.DddBase.Application.Dtos.ViewLevelExceptions;
+using Haskap.DddBase.Application.Contracts.ViewLevelExceptions;
 
 namespace Haskap.Workflow.Ui.MvcWebUi.GlobalExceptionHandling;
 

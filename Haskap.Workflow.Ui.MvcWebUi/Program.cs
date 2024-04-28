@@ -19,7 +19,6 @@ using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
 using Haskap.Workflow.Ui.MvcWebUi.CustomAuthorization;
 using Haskap.Workflow.Application.Contracts;
-using Haskap.Workflow.Application.Dtos.ViewLevelExceptions;
 using Haskap.Workflow.Ui.MvcWebUi.GlobalExceptionHandling;
 using Microsoft.AspNetCore.Mvc;
 using Haskap.Workflow.Application.UseCaseServices.Processes.Process1;
@@ -62,7 +61,7 @@ builder.Services.AddPersistance(builder.Configuration);
 //    //options.AddInterceptors(serviceProvider.GetRequiredService<AuditHistoryLogSaveChangesInterceptor<Guid?>>());
 //});
 
-builder.Services.AddBaseProviders();
+
 builder.Services.AddProviders();
 builder.Services.AddUseCaseServices();
 builder.Services.AddDomainServices();
