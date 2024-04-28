@@ -65,14 +65,5 @@ public static class ServiceCollectionExtensions
         });
 
         services.AddScoped<IWorkflowDbContext, AppDbContext>();
-    }
-
-    public static void AddCustomAuthorization(this IServiceCollection services)
-    {
-        services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
-
-        var recipePermissionProvider = new WorkflowPermissionProvider();
-        services.AddSingleton<IPermissionProvider>(recipePermissionProvider);
-        services.AddAuthorization(recipePermissionProvider.ConfigureAuthorization);
-    }
+    }    
 }
