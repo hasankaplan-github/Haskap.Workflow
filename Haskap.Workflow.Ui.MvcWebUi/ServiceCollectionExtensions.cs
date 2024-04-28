@@ -54,7 +54,7 @@ public static class ServiceCollectionExtensions
 
     public static void AddPersistance(this IServiceCollection services, ConfigurationManager configurationManager)
     {
-        services.AddBaseDbContext(typeof(AppDbContext));
+        services.AddBaseDbContext(typeof(IWorkflowDbContext), typeof(AppDbContext));
 
         var connectionString = configurationManager.GetConnectionString("WorkflowConnectionString");
         services.AddDbContext<AppDbContext>((serviceProvider, options) =>
@@ -63,7 +63,5 @@ public static class ServiceCollectionExtensions
             options.UseSnakeCaseNamingConvention();
             options.AddBaseInterceptors(serviceProvider);
         });
-
-        services.AddScoped<IWorkflowDbContext, AppDbContext>();
     }    
 }
