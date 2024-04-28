@@ -3,17 +3,16 @@ using Haskap.DddBase.Infra.Providers;
 using Haskap.Workflow.Infra.Db.Contexts.WorkflowDbContext;
 using Microsoft.EntityFrameworkCore;
 using Haskap.Workflow.Domain;
-using Haskap.DddBase.Application.UseCaseServices.Accounts;
 using Haskap.DddBase.Infra.Db.Interceptors;
 using Haskap.Workflow.Ui.MvcWebUi.CustomAuthorization;
 using Microsoft.AspNetCore.Authorization;
 using Haskap.DddBase.Presentation.CustomAuthorization;
-using Haskap.DddBase.Domain.UserAggregate;
 using Haskap.Workflow.Application.UseCaseServices.Processes.Process1;
 using Haskap.Workflow.Application.Contracts.Processes.Process1;
 using Haskap.Workflow.Domain.ProcessAggregate;
 using Haskap.DddBase.Domain;
 using Haskap.DddBase.Application.UseCaseServices;
+using Haskap.DddBase.Infra.Db.Contexts.EfCoreContext;
 
 namespace Haskap.Workflow.Ui.MvcWebUi;
 
@@ -44,9 +43,7 @@ public static class ServiceCollectionExtensions
 
     public static void AddEfInterceptors(this IServiceCollection services)
     {
-        services.AddScoped<AuditSaveChangesInterceptor>();
-        services.AddScoped<AuditHistoryLogSaveChangesInterceptor>();
-        services.AddScoped<MultiTenancySaveChangesInterceptor>();
+        services.AddBaseInterceptors();
     }
 
     public static void AddExternalServices(this IServiceCollection services)
@@ -57,19 +54,17 @@ public static class ServiceCollectionExtensions
 
     public static void AddPersistance(this IServiceCollection services, ConfigurationManager configurationManager)
     {
+        services.AddBaseDbContext(typeof(AppDbContext));
+
         var connectionString = configurationManager.GetConnectionString("WorkflowConnectionString");
         services.AddDbContext<AppDbContext>((serviceProvider, options) =>
         {
             options.UseNpgsql(connectionString);
             options.UseSnakeCaseNamingConvention();
-            options.AddInterceptors(
-                serviceProvider.GetRequiredService<MultiTenancySaveChangesInterceptor>(),
-                serviceProvider.GetRequiredService<AuditHistoryLogSaveChangesInterceptor>(),
-                serviceProvider.GetRequiredService<AuditSaveChangesInterceptor>());
+            options.AddBaseInterceptors(serviceProvider);
         });
 
         services.AddScoped<IWorkflowDbContext, AppDbContext>();
-        services.AddScoped<IBaseDbContext, AppDbContext>();
     }
 
     public static void AddCustomAuthorization(this IServiceCollection services)
