@@ -21,7 +21,8 @@ public static class ServiceCollectionExtensions
 {
     public static void AddDomainServices(this IServiceCollection services)
     {
-        services.AddTransient<UserDomainService>();
+        services.AddBaseDomainServices();
+
         services.AddTransient<ProcessDomainService>();
     }
 
