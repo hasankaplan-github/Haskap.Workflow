@@ -126,7 +126,6 @@ app.UseAuthorization();
 app.UseSoftDelete();
 app.UseLocalDateTimeProvider();
 app.UseCurrentUserIdProvider();
-app.UseVisitIdProvider();
 
 //app.UseRequestLocalization("tr-TR");
 app.UseRequestLocalization(x =>
