@@ -56,7 +56,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddBaseDbContext(typeof(IWorkflowDbContext), typeof(AppDbContext));
 
-        var connectionString = configurationManager.GetConnectionString("WorkflowConnectionString");
+        var connectionString = configurationManager.GetConnectionString("WorkflowNeonDbConnectionString");
         services.AddDbContext<AppDbContext>((serviceProvider, options) =>
         {
             options.UseNpgsql(connectionString);
