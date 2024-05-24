@@ -2,6 +2,7 @@
 using Haskap.DddBase.Domain.Services;
 using Haskap.DddBase.Utilities.Guids;
 using Haskap.Workflow.Application.Dtos.Processes;
+using Haskap.Workflow.Domain.Common;
 using Haskap.Workflow.Domain.RequestAggregate;
 using Haskap.Workflow.Domain.Shared.Enums;
 using Haskap.Workflow.Domain.StateAggregate;
@@ -26,16 +27,13 @@ public class ProcessDomainService : DomainService
         _currentUserIdProvider = currentUserIdProvider;
     }
 
-    public async Task<Guid> InitRequestAsync(Guid processId, dynamic? requestData, CancellationToken cancellationToken)
+    public async Task<Guid> InitRequestAsync(Guid processId, IRequestData? requestData, CancellationToken cancellationToken)
     {
         var startState = _workflowDbContext.State
             .FirstOrDefault(x => x.ProcessId == processId && x.StateType == StateType.StartState);
         var newRequest = new Request(GuidGenerator.CreateSimpleGuid(), processId, _currentUserIdProvider.CurrentUserId.Value, startState);
         await _workflowDbContext.Request.AddAsync(newRequest, cancellationToken);
 
-        // save data with requestId,
-        // data comes with inputDto,
-        // then SaveChanges (in single transaction)
         if (requestData is not null)
         {
             requestData.RequestId = newRequest.Id;
@@ -48,7 +46,7 @@ public class ProcessDomainService : DomainService
         return newRequest.Id;
     }
 
-    public async Task<Guid> MakeProgressAsync(MakeProgressInputDto inputDto, dynamic? progressData, CancellationToken cancellationToken)
+    public async Task<Guid> MakeProgressAsync(MakeProgressInputDto inputDto, IProgressData? progressData, CancellationToken cancellationToken)
     {
         var request = await _workflowDbContext.Request
             .Where(x => x.Id == inputDto.RequestId)
@@ -61,9 +59,6 @@ public class ProcessDomainService : DomainService
 
         var progressId = request.MakeProgress(path, _currentUserIdProvider.CurrentUserId.Value);
 
-        // save data with progressId,
-        // data comes with inputDto,
-        // then SaveChanges (in single transaction)
         if (progressData is not null)
         {
             progressData.ProgressId = progressId;
