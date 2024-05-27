@@ -25,7 +25,7 @@ public partial class RequestData : AggregateRoot, IRequestData
     }
 }
 
-public partial class RequestData : AggregateRoot, IRequestData
+public partial class RequestData
 {
     public string? Address { get; set; }
 
