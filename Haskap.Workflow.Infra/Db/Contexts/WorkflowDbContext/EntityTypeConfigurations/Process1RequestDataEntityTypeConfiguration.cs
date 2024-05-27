@@ -23,3 +23,14 @@ public class Process1RequestDataEntityTypeConfiguration : BaseEntityTypeConfigur
             .OnDelete(DeleteBehavior.Cascade);
     }
 }
+
+public class Process1RequestDataEntityTypeConfiguration2 : BaseEntityTypeConfiguration<RequestData>
+{
+    public override void Configure(EntityTypeBuilder<RequestData> builder)
+    {
+        base.Configure(builder);
+
+        builder.Property(x => x.Address)
+            .HasMaxLength(250);
+    }
+}
